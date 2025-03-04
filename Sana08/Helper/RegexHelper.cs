@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Sana08.Helpers
@@ -49,6 +50,64 @@ namespace Sana08.Helpers
             foreach (Match match in Regex.Matches(date, datePattern))
             {
                 Console.WriteLine(match.Value);
+            }
+        }
+        
+        // 6. Фільтрація слів
+        public static void filterWords(string text)
+        {
+            string wordPatter = @"\b[AaАа]\w{5,}";
+            Console.WriteLine("Correct words: ");
+            foreach(Match match in Regex.Matches(text, wordPatter))
+            {
+                Console.WriteLine(match.Value);
+            }
+        }
+        
+        // 7. Перевірка формату IP-адреси
+        public static bool ValidateIPv4(string ip)
+        {
+            string IPpattern = @"^(\d{1,3}\.){3}\d{1,3}$";
+            bool isValidIP = Regex.IsMatch(ip, IPpattern);
+            Console.WriteLine($"{ip} {(isValidIP ? "is" : "is not")} a valid IP address");
+            return isValidIP;
+        }
+        
+        // 8. Пошук HTML tag
+        public static void FindHtmlTag(string html)
+        {
+            string tagPattern = @"<\/?[a-zA-Z]+[^>]*>";
+            Console.WriteLine("HTML tags: ");
+            foreach (Match match in Regex.Matches(html, tagPattern))
+            {
+                Console.WriteLine(match.Value);
+            }
+            
+        }
+        
+        // 9. Знайти Url
+        public static void FindUrl(string url)
+        {
+            string urlPattern = @"\b(?:https?|ftp):\/\/[^\s/$.?#].[^\s]*\b"; 
+            Console.WriteLine("URL: ");
+            foreach (Match match in Regex.Matches(url, urlPattern))
+            {
+                Console.WriteLine(match.Value);
+            }
+        }
+        
+        // 10. Заміна формотування номеру телефону
+        public static void FindAndReplaceNumber(string text)
+        {
+            string numberPattern = @"\(\d{3}\)\s?\d{3}-\d{4}";  
+            Console.WriteLine("Replaced Numbers: ");
+            
+            foreach (Match match in Regex.Matches(text, numberPattern))
+            {
+                string replacedNumber = match.Value.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "");
+                replacedNumber = replacedNumber.Insert(3, "-").Insert(7, "-");
+                
+                Console.WriteLine(replacedNumber);
             }
         }
     }
